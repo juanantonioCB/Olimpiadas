@@ -7,7 +7,11 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Polideportivo;
@@ -46,7 +50,7 @@ public class PolideportivoDAO extends Conexion {
         boolean d= false;
         try {
             Connection con = getConnect();
-            PreparedStatement stat = con.prepareStatement(insert);
+            PreparedStatement stat = con.prepareStatement(update);
             stat.setInt(1, p.getCod_complejo());
             stat.setString(2, p.getInfo());
             if(stat.execute()){
@@ -59,4 +63,49 @@ public class PolideportivoDAO extends Conexion {
         }
         return d; 
     }
+    
+    public boolean delete(int cod){
+        boolean d = false;
+        try {
+            Connection con = getConnect();
+            PreparedStatement stat = con.prepareStatement(delete);
+            stat.setInt(1, cod);
+            if(stat.execute()){
+                stat.close();
+                d=true;
+            }
+            disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(PolideportivoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return d;
+    }
+    
+    public List<Polideportivo> getAll(){
+        ArrayList<Polideportivo> polideportivos = null;
+        try {
+            Connection con = getConnect();
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(getAll);
+            while(rs.next()){
+                if(rs.isFirst()){
+                    polideportivos= new ArrayList<>();
+                    Polideportivo p = new Polideportivo(rs.getInt("cod"), rs.getString("info"));
+                    polideportivos.add(p);
+                }
+            }
+            rs.close();
+            disconnect();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(PolideportivoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return polideportivos;
+    }
+    
+    
+    
+    
+    
+    
 }

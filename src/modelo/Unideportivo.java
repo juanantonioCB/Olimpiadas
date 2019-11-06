@@ -9,13 +9,15 @@ package modelo;
  *
  * @author Juan Antonio
  */
-public class Unideportivo extends Complejo {
+public class Unideportivo{
 
+    private int cod_complejo;
     private String deporte;
     private String info;
 
-    public Unideportivo(int cod, String localizacion, String jefe, int cod_sede, String info) {
-        super(cod, localizacion, jefe, cod_sede);
+    public Unideportivo(int cod, String deporte, String info) {
+        this.cod_complejo=cod;
+        this.deporte=deporte;
         this.info = info;
     }
 
@@ -33,5 +35,13 @@ public class Unideportivo extends Complejo {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public int getCod_complejo() {
+        return cod_complejo;
+    }
+
+    public void setCod_complejo(int cod_complejo) {
+        this.cod_complejo = cod_complejo;
     }
 }
