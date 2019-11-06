@@ -14,6 +14,11 @@ public class Sede {
     private String nombre;
     private double presupuesto;
 
+    public Sede(int cod, String nombre, double presupuesto){
+        this.cod=cod;
+        this.nombre=nombre;
+        this.presupuesto=presupuesto;
+    }
     /**
      * @return the cod
      */

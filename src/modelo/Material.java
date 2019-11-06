@@ -10,8 +10,14 @@ package modelo;
  * @author Juan Antonio
  */
 public class Material {
+
     private int cod;
     private String nombre;
+
+    public Material(int cod, String nombre) {
+        this.cod = cod;
+        this.nombre = nombre;
+    }
 
     public int getCod() {
         return cod;

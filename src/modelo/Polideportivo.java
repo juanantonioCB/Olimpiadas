@@ -9,12 +9,13 @@ package modelo;
  *
  * @author Juan Antonio
  */
-public class Polideportivo extends Complejo {
+public class Polideportivo {
 
+    private int cod_complejo;
     private String info;
 
-    public Polideportivo(int cod, String localizacion, String jefe, int cod_sede, String info) {
-        super(cod, localizacion, jefe, cod_sede);
+    public Polideportivo(int cod_complejo, String info) {
+        this.cod_complejo=cod_complejo;
         this.info = info;
     }
 
@@ -24,5 +25,13 @@ public class Polideportivo extends Complejo {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public int getCod_complejo() {
+        return cod_complejo;
+    }
+
+    public void setCod_complejo(int cod_complejo) {
+        this.cod_complejo = cod_complejo;
     }
 }

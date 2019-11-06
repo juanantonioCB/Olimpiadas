@@ -92,6 +92,7 @@ public class EventoDAO extends Conexion {
                 Evento e = new Evento(rs.getInt("cod"), rs.getString("nombre"), rs.getInt("cod_complejo"), rs.getDate("fecha"), rs.getInt("cod_area"));
                 eventos.add(e);
             }
+            rs.close();
             this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(EventoDAO.class.getName()).log(Level.SEVERE, null, ex);

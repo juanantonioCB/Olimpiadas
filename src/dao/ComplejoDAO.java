@@ -89,6 +89,7 @@ public class ComplejoDAO extends Conexion {
                 Complejo c = new Complejo(rs.getInt("cod"), rs.getString("localizacion"), rs.getString("jefe"), rs.getInt("cod_sede"));
                 complejos.add(c);
             }
+            rs.close();
             this.disconnect();
 
         } catch (SQLException ex) {

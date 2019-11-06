@@ -97,6 +97,7 @@ public class ComisarioDAO extends Conexion {
                 Comisario c = new Comisario(rs.getInt("cod"),rs.getString("dni"),rs.getString("nombre"));
                 comisarios.add(c);
             }
+            rs.close();
             this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(EventoDAO.class.getName()).log(Level.SEVERE, null, ex);
