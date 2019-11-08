@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  */
 public abstract class Conexion {
 
-    private static String db = "olimpiadas";
+    private static String db = "olympics";
     private static String user = "root";
     private static String password = "";
     private static String url = "jdbc:mysql://localhost:3306/" + db;

@@ -18,11 +18,11 @@ import modelo.Material;
 
 public class MaterialDAO extends Conexion {
 
-    String insert = "INSERT INTO material(nombre) VALUES (?)";
-    String update = "UPDATE material SET nombre=? WHERE cod=?";
-    String delete = "DELETE FROM material WHERE cod=?";
-    String getAll = "SELECT * FROM material";
-    String getOne = "SELECT * FROM material where cod=?";
+    String insert = "INSERT INTO equipment(name) VALUES (?)";
+    String update = "UPDATE equipment SET name=? WHERE id=?";
+    String delete = "DELETE FROM equipment WHERE id=?";
+    String getAll = "SELECT * FROM equipment";
+    String getOne = "SELECT * FROM equipment WHERE id=?";
 
     public boolean insert(Material m) {
         boolean d = false;

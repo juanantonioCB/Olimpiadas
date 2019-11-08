@@ -22,11 +22,11 @@ import modelo.Comisario;
  */
 public class ComisarioDAO extends Conexion {
 
-    String insert = "INSERT INTO comisario(dni,nombre) VALUES (?,?)";
-    String update = "UPDATE comisario SET dni=?, nombre=? WHERE cod = ?";
-    String delete = "DELETE FROM comisario WHERE cod=?";
-    String getAll = "SELECT dni, nombre FROM comisario";
-    String getOne = "SELECT dni, nombre FROM comisario WHERE cod=?";
+    String insert = "INSERT INTO commissioner(dni,name) VALUES (?,?)";
+    String update = "UPDATE commissioner SET dni=?, nombre=? WHERE id = ?";
+    String delete = "DELETE FROM commissioner WHERE id=?";
+    String getAll = "SELECT dni, name FROM commissioner";
+    String getOne = "SELECT dni, name FROM commissioner WHERE id=?";
 
     public boolean insert(Comisario c) {
         boolean d = false;

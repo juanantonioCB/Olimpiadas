@@ -14,7 +14,12 @@ public class Sede {
     private String nombre;
     private double presupuesto;
 
-    public Sede(int cod, String nombre, double presupuesto){
+    public Sede(String nombre, double presupuesto){
+        this.nombre=nombre;
+        this.presupuesto=presupuesto;
+    }
+    
+    public Sede(int cod,String nombre, double presupuesto){
         this.cod=cod;
         this.nombre=nombre;
         this.presupuesto=presupuesto;
@@ -59,6 +64,11 @@ public class Sede {
      */
     public void setPresupuesto(double presupuesto) {
         this.presupuesto = presupuesto;
+    }
+    
+    @Override
+    public String toString(){
+        return this.cod+" "+this.nombre+" "+this.presupuesto;
     }
     
 }

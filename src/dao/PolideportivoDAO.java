@@ -22,11 +22,11 @@ import modelo.Polideportivo;
  */
 public class PolideportivoDAO extends Conexion {
 
-    String insert = "INSERT INTO polideportivo VALUES(?,?)";
-    String update = "UPDATE polideportivo SET cod=?, info=? WHERE cod=?";
-    String delete = "DELETE FROM polideportivo where cod=?";
-    String getAll = "SELECT * FROM polideportivo";
-    String getOne = "SELECT * FROM polideportivo WHERE cod=?";
+    String insert = "INSERT INTO multisportcenter VALUES(?,?)";
+    String update = "UPDATE multisportcenter SET id_sportcomplex=?, information=? WHERE id_sportcomplex=?";
+    String delete = "DELETE FROM multisportcenter WHERE id_sportcomplex=?";
+    String getAll = "SELECT * FROM multisportcenter";
+    String getOne = "SELECT * FROM multisportcenter WHERE id_sportcomplex=?";
     
     public boolean insert(Polideportivo p){
         boolean d = false;

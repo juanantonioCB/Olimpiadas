@@ -22,11 +22,11 @@ import modelo.Sede;
  */
 public class SedeDAO extends Conexion {
 
-    String insert = "INSERT INTO sede (nombre,presupuesto) VALUES (?,?)";
-    String update = "UPDATE sede SET nombre=?, localizacion=? WHERE cod=?";
-    String delete = "DELETE FROM sede WHERE cod=?";
-    String getAll = "SELECT * FROM sede";
-    String getOne = "SELECT * FROM sede WHERE cod=?";
+    String insert = "INSERT INTO headquarter (name,budget) VALUES (?,?)";
+    String update = "UPDATE headquarter SET name=?, budget=? WHERE id=?";
+    String delete = "DELETE FROM headquarter WHERE id=?";
+    String getAll = "SELECT * FROM headquarter";
+    String getOne = "SELECT * FROM headquarter WHERE id=?";
 
     public boolean insert(Sede s) {
         boolean d = false;
@@ -92,7 +92,7 @@ public class SedeDAO extends Conexion {
                 if(rs.isFirst()){
                     sedes=new ArrayList<>();
                 }
-                Sede s = new Sede(rs.getInt("cod"),rs.getString("nombre"),rs.getDouble("presupuesto"));
+                Sede s = new Sede(rs.getInt("id"),rs.getString("name"),rs.getDouble("budget"));
                 sedes.add(s);
             }
             rs.close();

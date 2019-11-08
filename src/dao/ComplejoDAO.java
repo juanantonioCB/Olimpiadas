@@ -13,11 +13,11 @@ import modelo.Complejo;
 
 public class ComplejoDAO extends Conexion {
 
-    String insert = "INSERT INTO complejo (localizacion, jefe, cod_sede) VALUES (?,?,?)";
-    String update = "UPDATE complejo SET localizacion=?, jefe=?, cod_sede=? WHERE cod=?";
-    String delete = "DELETE complejo WHERE cod=?";
-    String getAll = "SELECT * FROM complejo";
-    String getOne = "SELECT * FROM complejo where cod=?";
+    String insert = "INSERT INTO sportcomplex (location, boss, id_headquarter) VALUES (?,?,?)";
+    String update = "UPDATE sportcomplex SET location=?, boss=?, id_headquarter=? WHERE id=?";
+    String delete = "DELETE sportcomplex WHERE id=?";
+    String getAll = "SELECT * FROM sportcomplex";
+    String getOne = "SELECT * FROM sportcomplex WHERE id=?";
 
     public boolean insertComplejo(Complejo c) {
         boolean d = false;
@@ -86,7 +86,7 @@ public class ComplejoDAO extends Conexion {
                 if (rs.isFirst()) {
                     complejos = new ArrayList<Complejo>();
                 }
-                Complejo c = new Complejo(rs.getInt("cod"), rs.getString("localizacion"), rs.getString("jefe"), rs.getInt("cod_sede"));
+                Complejo c = new Complejo(rs.getInt("id"), rs.getString("location"), rs.getString("boss"), rs.getInt("id_headquarter"));
                 complejos.add(c);
             }
             rs.close();

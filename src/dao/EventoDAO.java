@@ -14,11 +14,11 @@ import modelo.Evento;
 
 public class EventoDAO extends Conexion {
 
-    String insert = "INSERT INTO evento (nombre,cod_complejo,fecha,cod_area) VALUES (?,?,?,?)";
-    String update = "UPDATE evento SET nombre=?, cod_complejo=?, fecha=?, cod_area=? WHERE cod=?";
-    String delete = "DELETE from evento WHERE cod=?";
-    String getAll = "Select * from evento";
-    String getOne = "Select * FROM evento where cod=?";
+    String insert = "INSERT INTO event (name,date,id_sportcomplex,id_area) VALUES (?,?,?,?)";
+    String update = "UPDATE event SET name=?, date=?, id_sportcomplex=?, id_area=? WHERE cod=?";
+    String delete = "DELETE FROM event WHERE id=?";
+    String getAll = "SELECT * FROM event";
+    String getOne = "SELECT * FROM event WHERE id=?";
 
     public boolean insertEvento(Evento e) {
         boolean d = false;

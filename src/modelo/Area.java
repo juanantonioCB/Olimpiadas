@@ -10,16 +10,13 @@ package modelo;
  * @author Juan Antonio
  */
 public class Area {
-    private int cod;
+    private int id;
+    private int cod_polideportivo;
     private String localizacion;
     private String deporte;
 
-    public int getCod() {
-        return cod;
-    }
-
-    public void setCod(int cod) {
-        this.cod = cod;
+    public Area(int id,int cod_polideportivo, String localizacion, String deporte){
+        
     }
 
     public String getLocalizacion() {
@@ -36,5 +33,13 @@ public class Area {
 
     public void setDeporte(String deporte) {
         this.deporte = deporte;
+    }
+
+    public int getCod_polideportivo() {
+        return cod_polideportivo;
+    }
+
+    public void setCod_polideportivo(int cod_polideportivo) {
+        this.cod_polideportivo = cod_polideportivo;
     }
 }

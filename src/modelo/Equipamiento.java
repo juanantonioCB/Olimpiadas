@@ -9,8 +9,6 @@ package modelo;
  *
  * @author Juan Antonio
  */
-public class Main {
-    public static void main(String[] args){
-        
-    }
+public class Equipamiento {
+    
 }

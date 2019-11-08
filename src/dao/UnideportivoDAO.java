@@ -13,11 +13,11 @@ import modelo.Unideportivo;
 
 public class UnideportivoDAO extends Conexion {
 
-    String insert = "INSERT INTO unideportivo VALUES (?,?,?)";
-    String update = "UPDATE unideportivo SET cod=?, deporte=?, info=?";
-    String delete = "DELETE FROM unideportivo WHERE cod=?";
-    String getAll = "SELECT * FROM unideportivo";
-    String getOne = "SELECT * FROM unideportivo WHERE cod=?";
+    String insert = "INSERT INTO sportcenter VALUES (?,?,?)";
+    String update = "UPDATE sportcenter SET id_sportcomplex=?, sport=?, information=?";
+    String delete = "DELETE FROM sportcenter WHERE id_sportcomplex=?";
+    String getAll = "SELECT * FROM sportcenter";
+    String getOne = "SELECT * FROM sportcenter WHERE id_sportcomplex=?";
 
     public boolean insert(Unideportivo u) {
         boolean d = false;
