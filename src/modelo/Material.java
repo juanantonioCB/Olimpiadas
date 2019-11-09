@@ -18,6 +18,10 @@ public class Material {
         this.cod = cod;
         this.nombre = nombre;
     }
+    
+    public Material(String nombre) {
+        this.nombre = nombre;
+    }
 
     public int getCod() {
         return cod;

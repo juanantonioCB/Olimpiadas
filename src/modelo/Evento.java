@@ -5,7 +5,7 @@
  */
 package modelo;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -21,6 +21,13 @@ public class Evento {
     private String localizacion_complejo;
     private String area_location;
 
+    public Evento(String nombre, int cod_complejo, Date fecha, int cod_area) {
+        this.nombre = nombre;
+        this.cod_complejo = cod_complejo;
+        this.fecha = fecha;
+        this.cod_area = cod_area;
+    }
+    
     public Evento(int cod, String nombre, int cod_complejo, Date fecha, int cod_area) {
         this.id = cod;
         this.nombre = nombre;

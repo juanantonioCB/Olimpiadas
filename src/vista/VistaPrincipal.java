@@ -9,6 +9,7 @@ import dao.ComisarioDAO;
 import dao.ComplejoDAO;
 import dao.EquipamientoDAO;
 import dao.EventoDAO;
+import dao.MaterialDAO;
 import dao.PolideportivoDAO;
 import dao.SedeDAO;
 import dao.UnideportivoDAO;
@@ -19,6 +20,7 @@ import modelo.Comisario;
 import modelo.Complejo;
 import modelo.Equipamiento;
 import modelo.Evento;
+import modelo.Material;
 import modelo.Polideportivo;
 import modelo.Sede;
 import modelo.Unideportivo;
@@ -36,18 +38,22 @@ public class VistaPrincipal extends javax.swing.JFrame {
     ComisarioDAO comisarioDao = new ComisarioDAO();
     PolideportivoDAO polideportivoDao = new PolideportivoDAO();
     UnideportivoDAO unideportivoDao = new UnideportivoDAO();
+    MaterialDAO materialDao=new MaterialDAO();
 
     public VistaPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
         loadTable("Sedes");
         materialesJButton.setVisible(false);
+        nombreMaterialJTextField.setVisible(false);
+        addMaterialJButton.setVisible(false);
 
     }
 
     public void loadTable(String option) {
         switch (option) {
             case "Sedes":
+                this.addJButton.setVisible(true);
                 ArrayList<Sede> sedes = (ArrayList<Sede>) sedeDao.getAll();
                 if (sedes != null) {
                     DefaultTableModel model = new DefaultTableModel(new Object[][]{
@@ -68,6 +74,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 }
                 break;
             case "Complejos":
+                this.addJButton.setVisible(true);
                 ArrayList<Complejo> complejos = (ArrayList<Complejo>) complejoDao.getAllComplejos();
 
                 if (complejos != null) {
@@ -90,8 +97,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 }
                 break;
             case "Material":
+                this.addJButton.setVisible(false);
                 ArrayList<Equipamiento> equipamiento = (ArrayList<Equipamiento>) equipamientoDao.getAll();
                 if (equipamiento != null) {
+                    nombreMaterialJTextField.setVisible(true);
+                    addMaterialJButton.setVisible(true);
                     DefaultTableModel model = new DefaultTableModel(new Object[][]{
                         {null, null},},
                             new String[]{
@@ -105,10 +115,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
                         contenidoJTable.setValueAt(equipamiento.get(x).getId(), x, 0);
                         contenidoJTable.setValueAt(equipamiento.get(x).getNombre(), x, 1);
                     }
+                    
                 }
+                
                 break;
             case "Eventos":
-                this.materialesJButton.setVisible(true);
+                if(!this.addJButton.isEnabled()){
+                    this.materialesJButton.setVisible(true);
+                }
+                
                 ArrayList<Evento> eventos = (ArrayList<Evento>) eventoDao.getAll();
 
                 if (eventos != null) {
@@ -132,6 +147,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 }
                 break;
             case "Comisarios":
+                this.addJButton.setVisible(true);
                 ArrayList<Comisario> comisarios = (ArrayList<Comisario>) comisarioDao.getAll();
                 if (comisarios != null) {
                     DefaultTableModel model = new DefaultTableModel(new Object[][]{
@@ -153,6 +169,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 }
                 break;
             case "Polideportivos":
+                this.addJButton.setVisible(true);
                 ArrayList<Polideportivo> polideportivos = (ArrayList<Polideportivo>) polideportivoDao.getAll();
                 System.out.println(polideportivos.size());
                 if (polideportivos != null) {
@@ -176,6 +193,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 }
                 break;
             case "Unideportivos":
+                this.addJButton.setVisible(true);
                 ArrayList<Unideportivo> unideportivos = (ArrayList<Unideportivo>) unideportivoDao.getAll();
                 System.out.println(unideportivos.size());
                 if (unideportivos != null) {
@@ -198,7 +216,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                         contenidoJTable.setValueAt(unideportivos.get(x).getInfo(), x, 4);
                     }
                 }
-
         }
     }
 
@@ -216,9 +233,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         optionJComboBox = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         contenidoJTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        addJButton = new javax.swing.JButton();
         recargarJButton = new javax.swing.JButton();
         materialesJButton = new javax.swing.JButton();
+        nombreMaterialJTextField = new javax.swing.JTextField();
+        addMaterialJButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -251,15 +270,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(contenidoJTable);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/anadir.png"))); // NOI18N
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        addJButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/anadir.png"))); // NOI18N
+        addJButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                addJButtonMouseClicked(evt);
             }
         });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        addJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addJButtonActionPerformed(evt);
             }
         });
 
@@ -287,18 +306,20 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        nombreMaterialJTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        addMaterialJButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        addMaterialJButton.setText("Añadir Material");
+        addMaterialJButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addMaterialJButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(116, 116, 116)
-                .addComponent(optionJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jScrollPane1)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(457, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -308,10 +329,29 @@ public class VistaPrincipal extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(materialesJButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(recargarJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(245, 245, 245))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jScrollPane1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(116, 116, 116)
+                        .addComponent(optionJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(380, 380, 380)
+                        .addComponent(nombreMaterialJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(412, 412, 412)
+                        .addComponent(addMaterialJButton)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,17 +362,16 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(optionJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(materialesJButton)
-                                .addGap(18, 18, 18)))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(addJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(materialesJButton)
                     .addComponent(recargarJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(nombreMaterialJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addMaterialJButton)
+                .addGap(33, 33, 33))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -353,11 +392,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         loadTable((String) optionJComboBox.getSelectedItem());
     }//GEN-LAST:event_optionJComboBoxActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void addJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addJButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_addJButtonActionPerformed
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void addJButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addJButtonMouseClicked
         String option = (String) optionJComboBox.getSelectedItem();
         switch (option) {
             case "Sedes":
@@ -368,10 +407,18 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 AddComplejo addComplejo = new AddComplejo();
                 addComplejo.setVisible(true);
                 break;
+            case "Eventos":
+                AddEvento addEvento = new AddEvento();
+                addEvento.setVisible(true);
+                break;
+            case "Comisarios":
+                AddComisario addComisario = new AddComisario();
+                addComisario.setVisible(true);
+                break;
         }
 
 
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_addJButtonMouseClicked
 
     private void optionJComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_optionJComboBoxMouseClicked
 
@@ -399,6 +446,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_materialesJButtonMouseClicked
+
+    private void addMaterialJButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMaterialJButtonMouseClicked
+        if(!nombreMaterialJTextField.getText().equals("")){
+            Material m = new Material(nombreMaterialJTextField.getText());
+            materialDao.insert(m);
+            loadTable("Material");
+            nombreMaterialJTextField.setText(null);
+        }
+    }//GEN-LAST:event_addMaterialJButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -438,12 +494,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addJButton;
+    private javax.swing.JButton addMaterialJButton;
     private javax.swing.JTable contenidoJTable;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton materialesJButton;
+    private javax.swing.JTextField nombreMaterialJTextField;
     private javax.swing.JComboBox<String> optionJComboBox;
     private javax.swing.JButton recargarJButton;
     // End of variables declaration//GEN-END:variables

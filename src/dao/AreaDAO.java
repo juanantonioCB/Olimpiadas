@@ -16,7 +16,7 @@ public class AreaDAO extends Conexion {
     String insert = "INSERT INTO area (id_multisportcenter,location,sport) VALUES (?,?,?)";
     String update = "UPDATE area SET id_multisportcenter=?, location=?, sport=? WHERE id=?";
     String delete = "DELETE FROM area WHERE id=?";
-    String getAll = "SELECT * FROM area";
+
     String getOne = "SELECT * FROM area WHERE id=?";
 
     public boolean insert(Area a) {
@@ -76,8 +76,9 @@ public class AreaDAO extends Conexion {
         return d;
     }
 
-    public List<Area> getAll() {
+    public List<Area> getAll(int id) {
         ArrayList<Area> areas = null;
+        String getAll = "SELECT * FROM area WHERE area.id_multisportcenter=" + id;
         try {
 
             Connection con = getConnect();
@@ -87,11 +88,15 @@ public class AreaDAO extends Conexion {
                 if (rs.isFirst()) {
                     areas = new ArrayList<>();
                 }
-                areas.add(new Area(rs.getInt("id"), rs.getInt("id_multisportcenter"), rs.getString("location"), rs.getString("sport")));
+                Area a = new Area(rs.getInt("id"), rs.getInt("id_multisportcenter"), rs.getString("location"), rs.getString("sport"));
+                areas.add(a);
             }
+            rs.close();
+            disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(AreaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return areas;
+        
     }
 }

@@ -26,13 +26,14 @@ public class EventoDAO extends Conexion {
 
     public boolean insertEvento(Evento e) {
         boolean d = false;
+        
         try {
             Connection con = getConnect();
             PreparedStatement stat = null;
             stat = con.prepareStatement(insert);
             stat.setString(1, e.getNombre());
-            stat.setInt(2, e.getCod_complejo());
-            stat.setDate(3, (Date) e.getDate());
+            stat.setDate(2, e.getDate());
+            stat.setInt(3, e.getCod_complejo());
             stat.setInt(4, e.getCod_area());
             if (stat.execute()) {
                 d = true;

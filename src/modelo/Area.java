@@ -16,6 +16,10 @@ public class Area {
     private String deporte;
 
     public Area(int id,int cod_polideportivo, String localizacion, String deporte){
+        this.id=id;
+        this.cod_polideportivo=cod_polideportivo;
+        this.localizacion=localizacion;
+        this.deporte=deporte;
         
     }
 
@@ -41,5 +45,18 @@ public class Area {
 
     public void setCod_polideportivo(int cod_polideportivo) {
         this.cod_polideportivo = cod_polideportivo;
+    }
+    
+    @Override
+    public String toString(){
+        return getLocalizacion();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

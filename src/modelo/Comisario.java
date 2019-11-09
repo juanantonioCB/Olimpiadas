@@ -21,6 +21,11 @@ public class Comisario {
         this.nombre=nombre;
     }
     
+    public Comisario(String dni, String nombre){
+        this.dni=dni;
+        this.nombre=nombre;
+    }
+    
     
     public int getCod() {
         return cod;
