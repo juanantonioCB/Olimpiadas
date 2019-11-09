@@ -23,6 +23,7 @@ public class MaterialDAO extends Conexion {
     String delete = "DELETE FROM equipment WHERE id=?";
     String getAll = "SELECT * FROM equipment";
     String getOne = "SELECT * FROM equipment WHERE id=?";
+    
 
     public boolean insert(Material m) {
         boolean d = false;
@@ -93,6 +94,29 @@ public class MaterialDAO extends Conexion {
             }
             rs.close();
             disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(MaterialDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return materiales;
+    }
+    
+    public List<Material> getMaterialOfEvent(int id){
+        String getMaterialOfEvent="SELECT material.id,material.name "
+            + "FROM equipment AS material "
+            + "JOIN equipment_event as material_evento "
+            + "WHERE material_evento.id_equipment=material.id && material.id="+id;
+        ArrayList<Material>materiales=null;
+        try {
+            Connection con = getConnect();
+            Statement statement = con.createStatement();
+            
+            ResultSet rs = statement.executeQuery(getMaterialOfEvent);
+            while(rs.next()){
+                if(rs.isFirst()){
+                    materiales=new ArrayList<>();
+                }
+                materiales.add(new Material(rs.getInt("id"),rs.getString("name")));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(MaterialDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

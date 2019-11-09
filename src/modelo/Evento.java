@@ -13,26 +13,31 @@ import java.util.Date;
  */
 public class Evento {
 
-    private int cod;
+    private int id;
     private String nombre;
     private int cod_complejo;
     private Date fecha;
     private int cod_area;
-    
-    public Evento(int cod, String nombre, int cod_complejo, Date fecha, int cod_area){
-        this.cod=cod;
-        this.nombre=nombre;
-        this.cod_complejo=cod_complejo;
-        this.fecha=fecha;
-        this.cod_area=cod_area;
+    private String localizacion_complejo;
+    private String area_location;
+
+    public Evento(int cod, String nombre, int cod_complejo, Date fecha, int cod_area) {
+        this.id = cod;
+        this.nombre = nombre;
+        this.cod_complejo = cod_complejo;
+        this.fecha = fecha;
+        this.cod_area = cod_area;
     }
 
-    public int getCod() {
-        return cod;
-    }
-
-    public void setCod(int cod) {
-        this.cod = cod;
+    public Evento(int cod, String nombre, int cod_complejo, Date fecha, int cod_area, String localizacion_complejo,
+            String area_location) {
+        this.id = cod;
+        this.nombre = nombre;
+        this.cod_complejo = cod_complejo;
+        this.fecha = fecha;
+        this.cod_area = cod_area;
+        this.localizacion_complejo = localizacion_complejo;
+        this.area_location = area_location;
     }
 
     public String getNombre() {
@@ -73,5 +78,29 @@ public class Evento {
 
     public void setCod_area(int cod_area) {
         this.cod_area = cod_area;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getLocalizacion_complejo() {
+        return localizacion_complejo;
+    }
+
+    public void setLocalizacion_complejo(String localizacion_complejo) {
+        this.localizacion_complejo = localizacion_complejo;
+    }
+
+    public String getArea_location() {
+        return area_location;
+    }
+
+    public void setArea_location(String area_location) {
+        this.area_location = area_location;
     }
 }

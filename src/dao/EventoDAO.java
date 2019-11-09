@@ -17,7 +17,11 @@ public class EventoDAO extends Conexion {
     String insert = "INSERT INTO event (name,date,id_sportcomplex,id_area) VALUES (?,?,?,?)";
     String update = "UPDATE event SET name=?, date=?, id_sportcomplex=?, id_area=? WHERE cod=?";
     String delete = "DELETE FROM event WHERE id=?";
-    String getAll = "SELECT * FROM event";
+    String getAll = "SELECT evento.id, evento.name, evento.date, complejo.location as localizacion_complejo, "
+            + "area.location as area, evento.id_sportcomplex, evento.id_area "
+            + "FROM event as evento JOIN sportcomplex as complejo "
+            + "JOIN area as area WHERE complejo.id=evento.id_sportcomplex || area.id=evento.id_area "
+            + "GROUP By evento.id";
     String getOne = "SELECT * FROM event WHERE id=?";
 
     public boolean insertEvento(Evento e) {
@@ -79,7 +83,7 @@ public class EventoDAO extends Conexion {
         return d;
     }
 
-    public List<Evento> getAllEventos() {
+    public List<Evento> getAll() {
         ArrayList<Evento> eventos = null;
         try {
             Connection con = getConnect();
@@ -89,7 +93,8 @@ public class EventoDAO extends Conexion {
                 if (rs.isFirst()) {
                     eventos = new ArrayList<Evento>();
                 }
-                Evento e = new Evento(rs.getInt("cod"), rs.getString("nombre"), rs.getInt("cod_complejo"), rs.getDate("fecha"), rs.getInt("cod_area"));
+                Evento e = new Evento(rs.getInt("id"), rs.getString("name"), rs.getInt("id_sportcomplex"), rs.getDate("date"), rs.getInt("id_area"),
+                rs.getString("localizacion_complejo"),rs.getString("area"));
                 eventos.add(e);
             }
             rs.close();

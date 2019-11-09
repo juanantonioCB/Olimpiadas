@@ -10,13 +10,19 @@ package modelo;
  * @author Juan Antonio
  */
 public class Complejo {
-    private int cod;
-    private String localizacion;
-    private String jefe;
-    private int cod_sede;
+    protected int cod;
+    protected String localizacion;
+    protected String jefe;
+    protected int cod_sede;
     
     public Complejo(int cod, String localizacion, String jefe, int cod_sede){
         this.cod=cod;
+        this.localizacion=localizacion;
+        this.jefe=jefe;
+        this.cod_sede=cod_sede;
+    }
+    
+    public Complejo(String localizacion, String jefe, int cod_sede){
         this.localizacion=localizacion;
         this.jefe=jefe;
         this.cod_sede=cod_sede;

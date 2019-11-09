@@ -16,7 +16,7 @@ public class UnideportivoDAO extends Conexion {
     String insert = "INSERT INTO sportcenter VALUES (?,?,?)";
     String update = "UPDATE sportcenter SET id_sportcomplex=?, sport=?, information=?";
     String delete = "DELETE FROM sportcenter WHERE id_sportcomplex=?";
-    String getAll = "SELECT * FROM sportcenter";
+    String getAll = "SELECT * FROM sportcomplex JOIN sportcenter WHERE sportcomplex.id=sportcenter.id_sportcomplex";
     String getOne = "SELECT * FROM sportcenter WHERE id_sportcomplex=?";
 
     public boolean insert(Unideportivo u) {
@@ -85,7 +85,9 @@ public class UnideportivoDAO extends Conexion {
                 if (rs.isFirst()) {
                     unideportivos = new ArrayList<>();
                 }
-                Unideportivo u = new Unideportivo(rs.getInt("cod"), rs.getString("deporte"), rs.getString("info"));
+                Unideportivo u = new Unideportivo(rs.getInt("id"), rs.getString("location"),
+                        rs.getString("boss"), rs.getInt("id_headquarter"), rs.getInt("id_sportcomplex"),
+                        rs.getString("sport"), rs.getString("information"));
                 unideportivos.add(u);
             }
             rs.close();

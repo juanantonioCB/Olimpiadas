@@ -68,7 +68,7 @@ public class Sede {
     
     @Override
     public String toString(){
-        return this.cod+" "+this.nombre+" "+this.presupuesto;
+        return this.nombre;
     }
     
 }

@@ -5,12 +5,23 @@
  */
 package vista;
 
+import dao.ComisarioDAO;
 import dao.ComplejoDAO;
+import dao.EquipamientoDAO;
+import dao.EventoDAO;
+import dao.PolideportivoDAO;
 import dao.SedeDAO;
+import dao.UnideportivoDAO;
 import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
+import modelo.Comisario;
 import modelo.Complejo;
+import modelo.Equipamiento;
+import modelo.Evento;
+import modelo.Polideportivo;
 import modelo.Sede;
+import modelo.Unideportivo;
 
 /**
  *
@@ -19,12 +30,18 @@ import modelo.Sede;
 public class VistaPrincipal extends javax.swing.JFrame {
 
     SedeDAO sedeDao = new SedeDAO();
-    ComplejoDAO complejoDao= new ComplejoDAO();
-    
+    ComplejoDAO complejoDao = new ComplejoDAO();
+    EquipamientoDAO equipamientoDao = new EquipamientoDAO();
+    EventoDAO eventoDao = new EventoDAO();
+    ComisarioDAO comisarioDao = new ComisarioDAO();
+    PolideportivoDAO polideportivoDao = new PolideportivoDAO();
+    UnideportivoDAO unideportivoDao = new UnideportivoDAO();
+
     public VistaPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
         loadTable("Sedes");
+        materialesJButton.setVisible(false);
 
     }
 
@@ -52,7 +69,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 break;
             case "Complejos":
                 ArrayList<Complejo> complejos = (ArrayList<Complejo>) complejoDao.getAllComplejos();
-                
+
                 if (complejos != null) {
                     DefaultTableModel model = new DefaultTableModel(new Object[][]{
                         {null, null, null},},
@@ -62,7 +79,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                     contenidoJTable.setModel(model);
 
                     for (int i = 0; i < complejos.size() - 1; i++) {
-                        model.addRow(new Object[][]{{null, null, null,null}});
+                        model.addRow(new Object[][]{{null, null, null, null}});
                     }
                     for (int x = 0; x < complejos.size(); x++) {
                         contenidoJTable.setValueAt(complejos.get(x).getCod(), x, 0);
@@ -72,13 +89,116 @@ public class VistaPrincipal extends javax.swing.JFrame {
                     }
                 }
                 break;
-            case "Equipamiento":
-                
-        
-    
+            case "Material":
+                ArrayList<Equipamiento> equipamiento = (ArrayList<Equipamiento>) equipamientoDao.getAll();
+                if (equipamiento != null) {
+                    DefaultTableModel model = new DefaultTableModel(new Object[][]{
+                        {null, null},},
+                            new String[]{
+                                "ID", "Nombre"
+                            });
+                    contenidoJTable.setModel(model);
+                    for (int i = 0; i < equipamiento.size() - 1; i++) {
+                        model.addRow(new Object[][]{{null, null, null, null}});
+                    }
+                    for (int x = 0; x < equipamiento.size(); x++) {
+                        contenidoJTable.setValueAt(equipamiento.get(x).getId(), x, 0);
+                        contenidoJTable.setValueAt(equipamiento.get(x).getNombre(), x, 1);
+                    }
+                }
+                break;
+            case "Eventos":
+                this.materialesJButton.setVisible(true);
+                ArrayList<Evento> eventos = (ArrayList<Evento>) eventoDao.getAll();
 
-    
-            
+                if (eventos != null) {
+                    DefaultTableModel model = new DefaultTableModel(new Object[][]{
+                        {null, null, null, null, null, null}},
+                            new String[]{
+                                "ID", "Nombre", "Fecha", "Localizacion Complejo", "Area",});
+                    contenidoJTable.setModel(model);
+
+                    for (int i = 0; i < eventos.size() - 1; i++) {
+                        model.addRow(new Object[][]{{null, null, null, null}});
+                    }
+
+                    for (int x = 0; x < eventos.size(); x++) {
+                        contenidoJTable.setValueAt(eventos.get(x).getId(), x, 0);
+                        contenidoJTable.setValueAt(eventos.get(x).getNombre(), x, 1);
+                        contenidoJTable.setValueAt(eventos.get(x).getDate(), x, 2);
+                        contenidoJTable.setValueAt(eventos.get(x).getLocalizacion_complejo(), x, 3);
+                        contenidoJTable.setValueAt(eventos.get(x).getArea_location(), x, 4);
+                    }
+                }
+                break;
+            case "Comisarios":
+                ArrayList<Comisario> comisarios = (ArrayList<Comisario>) comisarioDao.getAll();
+                if (comisarios != null) {
+                    DefaultTableModel model = new DefaultTableModel(new Object[][]{
+                        {null, null, null}},
+                            new String[]{
+                                "ID", "DNI", "Nombre"
+                            });
+                    contenidoJTable.setModel(model);
+
+                    for (int i = 0; i < comisarios.size() - 1; i++) {
+                        model.addRow(new Object[][]{{null, null, null}});
+                    }
+
+                    for (int x = 0; x < comisarios.size(); x++) {
+                        contenidoJTable.setValueAt(comisarios.get(x).getCod(), x, 0);
+                        contenidoJTable.setValueAt(comisarios.get(x).getDni(), x, 1);
+                        contenidoJTable.setValueAt(comisarios.get(x).getNombre(), x, 2);
+                    }
+                }
+                break;
+            case "Polideportivos":
+                ArrayList<Polideportivo> polideportivos = (ArrayList<Polideportivo>) polideportivoDao.getAll();
+                System.out.println(polideportivos.size());
+                if (polideportivos != null) {
+                    DefaultTableModel model = new DefaultTableModel(new Object[][]{
+                        {null, null, null, null}},
+                            new String[]{
+                                "ID", "Location", "Jefe", "Informacion"
+                            });
+                    contenidoJTable.setModel(model);
+
+                    for (int i = 0; i < polideportivos.size() - 1; i++) {
+                        model.addRow(new Object[][]{{null, null, null, null}});
+                    }
+
+                    for (int x = 0; x < polideportivos.size(); x++) {
+                        contenidoJTable.setValueAt(polideportivos.get(x).getCod(), x, 0);
+                        contenidoJTable.setValueAt(polideportivos.get(x).getLocalizacion(), x, 1);
+                        contenidoJTable.setValueAt(polideportivos.get(x).getJefe(), x, 2);
+                        contenidoJTable.setValueAt(polideportivos.get(x).getInfo(), x, 3);
+                    }
+                }
+                break;
+            case "Unideportivos":
+                ArrayList<Unideportivo> unideportivos = (ArrayList<Unideportivo>) unideportivoDao.getAll();
+                System.out.println(unideportivos.size());
+                if (unideportivos != null) {
+                    DefaultTableModel model = new DefaultTableModel(new Object[][]{
+                        {null, null, null, null, null}},
+                            new String[]{
+                                "ID", "Location", "Jefe", "Deporte", "Informacion"
+                            });
+                    contenidoJTable.setModel(model);
+
+                    for (int i = 0; i < unideportivos.size() - 1; i++) {
+                        model.addRow(new Object[][]{{null, null, null, null, null}});
+                    }
+
+                    for (int x = 0; x < unideportivos.size(); x++) {
+                        contenidoJTable.setValueAt(unideportivos.get(x).getCod(), x, 0);
+                        contenidoJTable.setValueAt(unideportivos.get(x).getLocalizacion(), x, 1);
+                        contenidoJTable.setValueAt(unideportivos.get(x).getJefe(), x, 2);
+                        contenidoJTable.setValueAt(unideportivos.get(x).getDeporte(), x, 3);
+                        contenidoJTable.setValueAt(unideportivos.get(x).getInfo(), x, 4);
+                    }
+                }
+
         }
     }
 
@@ -97,6 +217,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         contenidoJTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        recargarJButton = new javax.swing.JButton();
+        materialesJButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,7 +226,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 0, 51));
         jLabel1.setText("Olimpiadas");
 
-        optionJComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sedes", "Complejos", "Equipamiento", "Eventos", "Comisarios", "Material" }));
+        optionJComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sedes", "Complejos", "Eventos", "Comisarios", "Material", "Polideportivos", "Unideportivos" }));
         optionJComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 optionJComboBoxMouseClicked(evt);
@@ -141,6 +263,30 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        recargarJButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/recargar.png"))); // NOI18N
+        recargarJButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                recargarJButtonMouseClicked(evt);
+            }
+        });
+        recargarJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                recargarJButtonActionPerformed(evt);
+            }
+        });
+
+        materialesJButton.setText("VER MATERIALES");
+        materialesJButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                materialesJButtonMouseClicked(evt);
+            }
+        });
+        materialesJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                materialesJButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -155,13 +301,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(457, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(424, 424, 424))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(materialesJButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(290, 290, 290))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(recargarJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(245, 245, 245))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,10 +321,18 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(optionJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(materialesJButton)
+                                .addGap(18, 18, 18)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(recargarJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -200,13 +358,47 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        VistaAddSede vistaAddSede = new VistaAddSede();
-        vistaAddSede.setVisible(true);
+        String option = (String) optionJComboBox.getSelectedItem();
+        switch (option) {
+            case "Sedes":
+                VistaAddSede vistaAddSede = new VistaAddSede();
+                vistaAddSede.setVisible(true);
+                break;
+            case "Complejos":
+                AddComplejo addComplejo = new AddComplejo();
+                addComplejo.setVisible(true);
+                break;
+        }
+
+
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void optionJComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_optionJComboBoxMouseClicked
 
     }//GEN-LAST:event_optionJComboBoxMouseClicked
+
+    private void recargarJButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recargarJButtonMouseClicked
+        loadTable((String) optionJComboBox.getSelectedItem());
+    }//GEN-LAST:event_recargarJButtonMouseClicked
+
+    private void recargarJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recargarJButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_recargarJButtonActionPerformed
+
+    private void materialesJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialesJButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_materialesJButtonActionPerformed
+
+    private void materialesJButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_materialesJButtonMouseClicked
+
+        try {
+            int id = (int) contenidoJTable.getValueAt(contenidoJTable.getSelectedRow(), 0);
+            VerMateriales verMateriales = new VerMateriales(id);
+            verMateriales.setVisible(true);
+        } catch (Exception e) {
+        }
+
+    }//GEN-LAST:event_materialesJButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -251,6 +443,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton materialesJButton;
     private javax.swing.JComboBox<String> optionJComboBox;
+    private javax.swing.JButton recargarJButton;
     // End of variables declaration//GEN-END:variables
 }

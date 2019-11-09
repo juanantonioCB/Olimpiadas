@@ -25,7 +25,7 @@ public class ComisarioDAO extends Conexion {
     String insert = "INSERT INTO commissioner(dni,name) VALUES (?,?)";
     String update = "UPDATE commissioner SET dni=?, nombre=? WHERE id = ?";
     String delete = "DELETE FROM commissioner WHERE id=?";
-    String getAll = "SELECT dni, name FROM commissioner";
+    String getAll = "SELECT * FROM commissioner";
     String getOne = "SELECT dni, name FROM commissioner WHERE id=?";
 
     public boolean insert(Comisario c) {
@@ -84,7 +84,7 @@ public class ComisarioDAO extends Conexion {
         return d;
     }
     
-    public List<Comisario> getAllComisarios() {
+    public List<Comisario> getAll() {
         ArrayList<Comisario> comisarios = null;
         try {
             Connection con = getConnect();
@@ -94,7 +94,7 @@ public class ComisarioDAO extends Conexion {
                 if (rs.isFirst()) {
                     comisarios = new ArrayList<Comisario>();
                 }
-                Comisario c = new Comisario(rs.getInt("cod"),rs.getString("dni"),rs.getString("nombre"));
+                Comisario c = new Comisario(rs.getInt("id"),rs.getString("dni"),rs.getString("name"));
                 comisarios.add(c);
             }
             rs.close();
