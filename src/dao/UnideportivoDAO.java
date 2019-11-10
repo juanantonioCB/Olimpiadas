@@ -33,7 +33,7 @@ public class UnideportivoDAO extends Conexion {
             }
             disconnect();
         } catch (SQLException ex) {
-            Logger.getLogger(UnideportivoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            d = false;
         }
         return d;
     }

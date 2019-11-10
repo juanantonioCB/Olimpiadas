@@ -19,6 +19,8 @@ public class Polideportivo extends Complejo {
         this.cod_complejo = cod_complejo;
         this.info = info;
     }
+    
+
 
     public String getInfo() {
         return info;

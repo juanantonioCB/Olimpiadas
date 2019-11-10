@@ -21,9 +21,9 @@ public class Unideportivo extends Complejo {
         this.deporte = deporte;
         this.info = info;
     }
-    
-    public Unideportivo(int id,String location, String boss, int cod_sede, int cod_complejo, String deporte, String info) {
-        super(id,location, boss, cod_sede);
+
+    public Unideportivo(int id, String location, String boss, int cod_sede, int cod_complejo, String deporte, String info) {
+        super(id, location, boss, cod_sede);
         this.cod_complejo = cod_complejo;
         this.deporte = deporte;
         this.info = info;
@@ -52,9 +52,9 @@ public class Unideportivo extends Complejo {
     public void setCod_complejo(int cod_complejo) {
         this.cod_complejo = cod_complejo;
     }
-    
+
     @Override
-    public String toString(){
-        return "Unideportivo "+localizacion;
+    public String toString() {
+        return "Unideportivo " + localizacion;
     }
 }

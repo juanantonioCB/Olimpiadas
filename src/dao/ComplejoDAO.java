@@ -15,7 +15,7 @@ public class ComplejoDAO extends Conexion {
 
     String insert = "INSERT INTO sportcomplex (location, boss, id_headquarter) VALUES (?,?,?)";
     String update = "UPDATE sportcomplex SET location=?, boss=?, id_headquarter=? WHERE id=?";
-    String delete = "DELETE sportcomplex WHERE id=?";
+    String delete = "DELETE FROM sportcomplex WHERE id=?";
     String getAll = "SELECT * FROM sportcomplex";
     String getOne = "SELECT * FROM sportcomplex WHERE id=?";
 

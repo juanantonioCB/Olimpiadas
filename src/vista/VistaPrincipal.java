@@ -38,7 +38,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     ComisarioDAO comisarioDao = new ComisarioDAO();
     PolideportivoDAO polideportivoDao = new PolideportivoDAO();
     UnideportivoDAO unideportivoDao = new UnideportivoDAO();
-    MaterialDAO materialDao=new MaterialDAO();
+    MaterialDAO materialDao = new MaterialDAO();
 
     public VistaPrincipal() {
         initComponents();
@@ -51,9 +51,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }
 
     public void loadTable(String option) {
+        this.addJButton.setVisible(true);
+        this.addMaterialJButton.setVisible(false);
+        this.materialesJButton.setVisible(false);
+        this.nombreMaterialJTextField.setVisible(false);
         switch (option) {
             case "Sedes":
-                this.addJButton.setVisible(true);
                 ArrayList<Sede> sedes = (ArrayList<Sede>) sedeDao.getAll();
                 if (sedes != null) {
                     DefaultTableModel model = new DefaultTableModel(new Object[][]{
@@ -74,7 +77,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 }
                 break;
             case "Complejos":
-                this.addJButton.setVisible(true);
+
                 ArrayList<Complejo> complejos = (ArrayList<Complejo>) complejoDao.getAllComplejos();
 
                 if (complejos != null) {
@@ -98,6 +101,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 break;
             case "Material":
                 this.addJButton.setVisible(false);
+                this.nombreMaterialJTextField.setVisible(true);
+                this.addMaterialJButton.setVisible(true);
                 ArrayList<Equipamiento> equipamiento = (ArrayList<Equipamiento>) equipamientoDao.getAll();
                 if (equipamiento != null) {
                     nombreMaterialJTextField.setVisible(true);
@@ -115,17 +120,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
                         contenidoJTable.setValueAt(equipamiento.get(x).getId(), x, 0);
                         contenidoJTable.setValueAt(equipamiento.get(x).getNombre(), x, 1);
                     }
-                    
+
                 }
-                
+
                 break;
             case "Eventos":
-                if(!this.addJButton.isEnabled()){
-                    this.materialesJButton.setVisible(true);
-                }
-                
                 ArrayList<Evento> eventos = (ArrayList<Evento>) eventoDao.getAll();
-
+                this.materialesJButton.setVisible(true);
                 if (eventos != null) {
                     DefaultTableModel model = new DefaultTableModel(new Object[][]{
                         {null, null, null, null, null, null}},
@@ -147,7 +148,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 }
                 break;
             case "Comisarios":
-                this.addJButton.setVisible(true);
                 ArrayList<Comisario> comisarios = (ArrayList<Comisario>) comisarioDao.getAll();
                 if (comisarios != null) {
                     DefaultTableModel model = new DefaultTableModel(new Object[][]{
@@ -169,7 +169,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 }
                 break;
             case "Polideportivos":
-                this.addJButton.setVisible(true);
                 ArrayList<Polideportivo> polideportivos = (ArrayList<Polideportivo>) polideportivoDao.getAll();
                 System.out.println(polideportivos.size());
                 if (polideportivos != null) {
@@ -193,7 +192,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 }
                 break;
             case "Unideportivos":
-                this.addJButton.setVisible(true);
                 ArrayList<Unideportivo> unideportivos = (ArrayList<Unideportivo>) unideportivoDao.getAll();
                 System.out.println(unideportivos.size());
                 if (unideportivos != null) {
@@ -238,6 +236,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         materialesJButton = new javax.swing.JButton();
         nombreMaterialJTextField = new javax.swing.JTextField();
         addMaterialJButton = new javax.swing.JButton();
+        deleteJButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -316,6 +315,18 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        deleteJButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/borrar.png"))); // NOI18N
+        deleteJButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteJButtonMouseClicked(evt);
+            }
+        });
+        deleteJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteJButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -330,9 +341,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
                         .addComponent(materialesJButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(113, 113, 113)
                         .addComponent(recargarJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(245, 245, 245))))
+                        .addGap(83, 83, 83))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -362,16 +375,21 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(optionJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(materialesJButton)
-                    .addComponent(recargarJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(nombreMaterialJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addMaterialJButton)
-                .addGap(33, 33, 33))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(materialesJButton)
+                            .addComponent(recargarJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(nombreMaterialJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addMaterialJButton)
+                        .addGap(33, 33, 33))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(deleteJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -415,6 +433,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 AddComisario addComisario = new AddComisario();
                 addComisario.setVisible(true);
                 break;
+            case "Polideportivos":
+                AddPolideportivo addPolideportivo = new AddPolideportivo();
+                addPolideportivo.setVisible(true);
+                break;
+            case "Unideportivos":
+                AddUnideportivo addUnideportivo = new AddUnideportivo();
+                addUnideportivo.setVisible(true);
+                break;
         }
 
 
@@ -448,13 +474,52 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_materialesJButtonMouseClicked
 
     private void addMaterialJButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMaterialJButtonMouseClicked
-        if(!nombreMaterialJTextField.getText().equals("")){
+        if (!nombreMaterialJTextField.getText().equals("")) {
             Material m = new Material(nombreMaterialJTextField.getText());
             materialDao.insert(m);
             loadTable("Material");
             nombreMaterialJTextField.setText(null);
         }
     }//GEN-LAST:event_addMaterialJButtonMouseClicked
+
+    private void deleteJButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteJButtonMouseClicked
+        String option = (String) this.optionJComboBox.getSelectedItem();
+        switch (option) {
+            case "Sedes":
+                int id = (int) contenidoJTable.getValueAt(contenidoJTable.getSelectedRow(), 0);
+                sedeDao.delete(id);
+                loadTable("Sedes");
+                break;
+            case "Complejos":
+                complejoDao.deleteComplejo((int) contenidoJTable.getValueAt(contenidoJTable.getSelectedRow(), 0));
+                loadTable("Complejos");
+                break;
+            case "Eventos":
+                eventoDao.deleteEvento((int) contenidoJTable.getValueAt(contenidoJTable.getSelectedRow(), 0));
+                loadTable("Eventos");
+                break;
+            case "Comisarios":
+                comisarioDao.delete((int) contenidoJTable.getValueAt(contenidoJTable.getSelectedRow(), 0));
+                loadTable("Comisarios");
+                break;
+            case "Material":
+                materialDao.delete((int) contenidoJTable.getValueAt(contenidoJTable.getSelectedRow(), 0));
+                loadTable("Material");
+                break;
+            case "Polideportivos":
+                polideportivoDao.delete((int) contenidoJTable.getValueAt(contenidoJTable.getSelectedRow(), 0));
+                loadTable("Polideportivos");
+                break;
+            case "Unideportivos":
+                unideportivoDao.delete((int) contenidoJTable.getValueAt(contenidoJTable.getSelectedRow(), 0));
+                loadTable("Unideportivos");
+                break;
+        }
+    }//GEN-LAST:event_deleteJButtonMouseClicked
+
+    private void deleteJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteJButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteJButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -497,6 +562,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton addJButton;
     private javax.swing.JButton addMaterialJButton;
     private javax.swing.JTable contenidoJTable;
+    private javax.swing.JButton deleteJButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

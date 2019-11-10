@@ -67,4 +67,9 @@ public class Complejo {
     public void setCod_sede(int cod_sede) {
         this.cod_sede = cod_sede;
     }
+    
+    @Override
+    public String toString(){
+        return localizacion;
+    }
 }

@@ -89,7 +89,7 @@ public class MaterialDAO extends Conexion {
                 if (rs.isFirst()) {
                     materiales = new ArrayList<>();
                 }
-                Material m = new Material(rs.getInt("cod"), rs.getString("nombre"));
+                Material m = new Material(rs.getInt("id"), rs.getString("name"));
                 materiales.add(m);
             }
             rs.close();
